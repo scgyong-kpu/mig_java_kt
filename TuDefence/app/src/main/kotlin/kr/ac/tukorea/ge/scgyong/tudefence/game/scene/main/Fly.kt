@@ -144,7 +144,9 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
 
         pm.getPosTan(distance, pos, tan)
         setPosition(pos[0] + dx, pos[1] + dy)
-        angle = Math.toDegrees(Math.atan2(tan[1].toDouble(), tan[0].toDouble())).toFloat()
+        val tanY = tan[1].toDouble()
+        val tanX = tan[0].toDouble()
+        angle = Math.toDegrees(Math.atan2(tanY, tanX)).toFloat()
     }
 
     override fun draw(canvas: Canvas) {
