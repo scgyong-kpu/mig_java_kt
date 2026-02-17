@@ -69,10 +69,16 @@ object Converter {
             configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             val module = SimpleModule()
-            module.addDeserializer(OffsetDateTime::class.java) { jsonParser, _ ->
-                val value = jsonParser.text
-                parseDateTimeString(value)
-            }
+            module.addDeserializer(OffsetDateTime::class.java,
+                object : JsonDeserializer<OffsetDateTime>() {
+                    override fun deserialize(
+                        jsonParser: JsonParser,
+                        deserializationContext: DeserializationContext
+                    ): OffsetDateTime {
+                        val value = jsonParser.text
+                        return parseDateTimeString(value)
+                    }
+                })
             registerModule(module)
         }
     }
