@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.spgp2025.a2dg.framework.util
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics
 
 data class Velocity(var dx: Float = 0f, var dy: Float = 0f) {
     fun set(dx: Float, dy: Float): Velocity {

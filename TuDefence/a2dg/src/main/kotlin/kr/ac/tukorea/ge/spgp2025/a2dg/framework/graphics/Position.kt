@@ -1,4 +1,4 @@
-package kr.ac.tukorea.ge.spgp2025.a2dg.framework.util
+package kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics
 
 data class Position(var x: Float = 0f, var y: Float = 0f) {
     fun set(x: Float, y: Float): Position {

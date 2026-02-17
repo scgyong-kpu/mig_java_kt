@@ -6,11 +6,11 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.util.Log
 import androidx.annotation.NonNull
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics.Position
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics.Velocity
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Position
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Velocity
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 
 open class Sprite(mipmapId: Int) : IGameObject {
