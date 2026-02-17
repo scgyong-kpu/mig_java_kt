@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    kotlin("android")
 }
 
 android {
@@ -26,9 +27,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget = "11"
+        languageVersion = "2.0"
+    }
 }
 
 dependencies {
+    implementation(libs.kotlin.stdlib)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
