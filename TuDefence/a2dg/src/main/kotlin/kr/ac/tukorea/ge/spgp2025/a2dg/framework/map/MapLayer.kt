@@ -34,9 +34,10 @@ class MapLayer {
     var y: Long = 0
 
     fun tileAt(x: Int, y: Int): Int {
-        if (x >= width) return -1
-        if (y >= height) return -1
-        return data?.get((y * width.toInt() + x).toLong())?.toInt() ?: -1
+        if (x >= width.toInt()) return -1
+        if (y >= height.toInt()) return -1
+        val index = (y.toLong() * width + x.toLong()).toInt()
+        return data?.get(index)?.toInt() ?: -1
     }
 }
 

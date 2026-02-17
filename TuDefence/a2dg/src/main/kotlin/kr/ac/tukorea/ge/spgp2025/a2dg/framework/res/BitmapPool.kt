@@ -18,7 +18,7 @@ object BitmapPool {
                 opts = BitmapFactory.Options()
                 opts!!.inScaled = false
             }
-            val res: Resources = GameView.view.resources
+            val res: Resources = GameView.view!!.resources
             bitmap = BitmapFactory.decodeResource(res, mipmapResId, opts)
             Log.d(TAG, "Bitmap " + res.getResourceEntryName(mipmapResId) + "(" + mipmapResId + ") : " + bitmap.width + "x" + bitmap.height)
             bitmaps[mipmapResId] = bitmap

@@ -15,13 +15,13 @@ open class Sprite(mipmapId: Int) : IGameObject {
     protected var bitmap: Bitmap? = null
     protected var srcRect: Rect? = null
     protected val dstRect = RectF()
-    protected var x = 0f
-    protected var y = 0f
-    protected var dx = 0f
-    protected var dy = 0f
-    protected var width = 0f
-    protected var height = 0f
-    protected var radius = 0f
+    var x = 0f
+    var y = 0f
+    var dx = 0f
+    var dy = 0f
+    var width = 0f
+    var height = 0f
+    var radius = 0f
 
     init {
         if (mipmapId != 0) {
@@ -62,11 +62,6 @@ open class Sprite(mipmapId: Int) : IGameObject {
         RectUtil.setRect(dstRect, x, y, width, height)
     }
 
-    fun getX(): Float = x
-    fun getY(): Float = y
-    fun getWidth(): Float = width
-    fun getHeight(): Float = height
-    fun getRadius(): Float = radius
 
     fun getPropotionalHeight(width: Float): Float {
         return width / bitmap!!.width * bitmap!!.height

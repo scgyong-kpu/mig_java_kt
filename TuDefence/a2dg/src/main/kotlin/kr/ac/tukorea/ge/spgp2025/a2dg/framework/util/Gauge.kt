@@ -11,7 +11,7 @@ class Gauge(width: Float, fgColorResId: Int, bgColorResId: Int) {
     private val bgPaint = Paint()
 
     init {
-        val res: Resources = GameView.view.resources
+        val res: Resources = GameView.view!!.resources
         bgPaint.style = Paint.Style.STROKE
         bgPaint.strokeWidth = width
         bgPaint.color = ResourcesCompat.getColor(res, bgColorResId, null)

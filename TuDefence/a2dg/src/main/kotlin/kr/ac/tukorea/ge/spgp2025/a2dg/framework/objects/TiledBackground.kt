@@ -112,9 +112,9 @@ class TiledBackground(mapAssetFile: String, var tileWidth: Float, var tileHeight
                 val drawCol = if (wraps) col % layer.width.toInt() else col
                 val drawRow = if (wraps) row % layer.height.toInt() else row
 
-                if (drawCol < 0 || drawCol >= layer.width || drawRow < 0 || drawRow >= layer.height) continue
+                if (drawCol < 0 || drawCol >= layer.width.toInt() || drawRow < 0 || drawRow >= layer.height.toInt()) continue
 
-                val tileId = layer.data!![(drawRow * layer.width.toInt() + drawCol).toLong()].toInt()
+                val tileId = layer.data!![(drawRow.toLong() * layer.width + drawCol.toLong()).toInt()].toInt()
                 if (tileId == 0) continue
 
                 val screenX = col * tileWidth - scrollX

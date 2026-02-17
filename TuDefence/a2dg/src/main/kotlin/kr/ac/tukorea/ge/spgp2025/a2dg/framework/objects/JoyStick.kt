@@ -10,7 +10,6 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 import kotlin.math.sqrt
-import kotlin.math.toDegrees
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
@@ -19,16 +18,16 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 class JoyStick(
     bgBmpId: Int,
     thumbBmpId: Int,
-    x: Float,
-    y: Float,
+    xPos: Float,
+    yPos: Float,
     val bg_radius: Float,
     val thumb_radius: Float,
     val move_radius: Float
 ) : IGameObject {
     private val bgBitmap = BitmapPool.get(bgBmpId)
     private val thumbBitmap = BitmapPool.get(thumbBmpId)
-    private var x = x
-    private var y = y
+    private var x = xPos
+    private var y = yPos
     private val bgRect = RectUtil.newRectF(x, y, bg_radius)
     private val thumbRect = RectUtil.newRectF(x, y, thumb_radius)
 
@@ -74,7 +73,7 @@ class JoyStick(
                 power = (radius / move_radius).toFloat()
                 val cx = x + dx
                 val cy = y + dy
-                Log.d(TAG, "angle=${toDegrees(angle_radian.toDouble()).toInt()}° power=${String.format("%.2f", power)}")
+                Log.d(TAG, "angle=${Math.toDegrees(angle_radian.toDouble()).toInt()}° power=${String.format("%.2f", power)}")
                 RectUtil.setRect(thumbRect, cx, cy, thumb_radius)
                 false
             }

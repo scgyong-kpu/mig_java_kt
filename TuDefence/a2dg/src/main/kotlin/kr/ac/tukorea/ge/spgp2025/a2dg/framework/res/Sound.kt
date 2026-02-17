@@ -12,7 +12,7 @@ object Sound {
 
     fun playMusic(resId: Int) {
         mediaPlayer?.stop()
-        mediaPlayer = MediaPlayer.create(GameView.view.context, resId)
+        mediaPlayer = MediaPlayer.create(GameView.view!!.context, resId)
         mediaPlayer?.isLooping = true
         mediaPlayer?.start()
     }
@@ -36,7 +36,7 @@ object Sound {
         if (soundIdMap.containsKey(resId)) {
             soundId = soundIdMap[resId] ?: 0
         } else {
-            soundId = pool.load(GameView.view.context, resId, 1)
+            soundId = pool.load(GameView.view!!.context, resId, 1)
             soundIdMap[resId] = soundId
         }
         pool.play(soundId, 1f, 1f, 1, 0, 1f)
