@@ -13,7 +13,6 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
-import kotlin.math.toRadians
 
 class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
     companion object {
@@ -40,14 +39,14 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         if (level > maxLevel) level = maxLevel
         srcRect!!.set(h * (level - 1), 0, h * level, h)
 
-        val radian = toRadians(cannon.angle.toDouble())
+        val radian = Math.toRadians(cannon.angle.toDouble())
         val speed = (level + 10) * 100
         dx = (speed * cos(radian)).toFloat()
         dy = (speed * sin(radian)).toFloat()
         power = (10 * 1.2.pow((level - 1).toDouble())).toFloat()
         splashes = level >= 4
         radius = 20f + level * 2f
-        setPosition(cannon.getX(), cannon.getY(), radius)
+        setPosition(cannon.x, cannon.y, radius)
 
         return this
     }
@@ -85,9 +84,9 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         }
     }
 
-    private fun explode(scene: MainScene, flyHit: Fly, flies: ArrayList<IGameObject>) {
-        val fx = flyHit.getX()
-        val fy = flyHit.getY()
+    private fun explode(scene: MainScene, flyHit: Fly, flies: MutableList<IGameObject>) {
+        val fx = flyHit.x
+        val fy = flyHit.y
         val explosion_radius = 60 + 3 * power
         val ex = Explosion.get(fx, fy, explosion_radius)
         scene.add(MainScene.Layer.explosion, ex)
@@ -96,8 +95,8 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         for (index in flies.size - 1 downTo 0) {
             val fly = flies[index] as? Fly ?: continue
             if (fly == flyHit) continue
-            val dx = fx - fly.getX()
-            val dy = fy - fly.getY()
+            val dx = fx - fly.x
+            val dy = fy - fly.y
             val dist_sq = (dx * dx + dy * dy).toDouble()
             if (dist_sq < radius_sq) {
                 fly.decreaseLife(power / 2)

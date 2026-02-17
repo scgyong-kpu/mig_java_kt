@@ -11,7 +11,8 @@ class MainGameActivity : GameActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         GameView.drawsDebugStuffs = BuildConfig.DEBUG
-        Metrics.setGameSize(3200f, 1800f)
+        Metrics.width = 3200f
+        Metrics.height = 1800f
         MainScene().push()
     }
 }

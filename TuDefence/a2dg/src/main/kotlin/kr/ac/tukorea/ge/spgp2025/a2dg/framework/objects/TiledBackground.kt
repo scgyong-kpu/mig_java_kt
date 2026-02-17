@@ -18,7 +18,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 
-class TiledBackground(mapAssetFile: String, var tileWidth: Float, var tileHeight: Float) : IGameObject {
+open class TiledBackground(mapAssetFile: String, var tileWidth: Float, var tileHeight: Float) : IGameObject {
     val map: TiledMap
     val assetPath: String
     var tileset: Tileset? = null
@@ -43,11 +43,6 @@ class TiledBackground(mapAssetFile: String, var tileWidth: Float, var tileHeight
         scrollY = y
     }
 
-    fun doesWrap(): Boolean = wraps
-
-    fun setWraps(wraps: Boolean) {
-        this.wraps = wraps
-    }
 
     private fun loadMap(fileName: String): TiledMap? {
         return try {

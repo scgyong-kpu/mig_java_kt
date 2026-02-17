@@ -12,9 +12,9 @@ class MainScene : Scene() {
         private const val TAG = "MainScene"
     }
 
-    protected val tiledBg: DesertMapBg
+    val tiledBg: DesertMapBg
     protected val mapSelector: MapSelector
-    protected val score: Score
+    val score: Score
 
     enum class Layer {
         bg, enemy, cannon, shell, explosion, score, selection, controller
@@ -28,7 +28,7 @@ class MainScene : Scene() {
         add(Layer.controller, WaveGen(this))
 
         score = Score(R.mipmap.gold_number, Metrics.width - 50, 50f, 100f)
-        score.setScore(30)
+        score.score = 30
         add(Layer.score, score)
     }
 

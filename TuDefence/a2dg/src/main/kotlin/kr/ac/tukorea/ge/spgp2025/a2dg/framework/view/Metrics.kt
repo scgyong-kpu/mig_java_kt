@@ -8,7 +8,15 @@ import android.util.Log
 object Metrics {
     private const val TAG = "Metrics"
     var width: Float = 900f
+        set(value) {
+            field = value
+            borderRect.right = value
+        }
     var height: Float = 1600f
+        set(value) {
+            field = value
+            borderRect.bottom = value
+        }
     const val GRID_UNIT = 100f
     val borderRect = RectF(0f, 0f, width, height)
     val screenRect = RectF()
@@ -16,12 +24,6 @@ object Metrics {
     private val invertedMatrix = Matrix()
     private val pointsBuffer = FloatArray(2)
 
-    fun setGameSize(width: Float, height: Float) {
-        Metrics.width = width
-        Metrics.height = height
-        borderRect.right = width
-        borderRect.bottom = height
-    }
 
     fun onSize(w: Int, h: Int) {
         val view_ratio = w.toFloat() / h.toFloat()

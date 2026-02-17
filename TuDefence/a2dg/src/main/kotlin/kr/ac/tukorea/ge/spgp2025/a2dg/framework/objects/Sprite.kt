@@ -14,7 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 open class Sprite(mipmapId: Int) : IGameObject {
     protected var bitmap: Bitmap? = null
     protected var srcRect: Rect? = null
-    protected val dstRect = RectF()
+    val dstRect = RectF()
     var x = 0f
     var y = 0f
     var dx = 0f

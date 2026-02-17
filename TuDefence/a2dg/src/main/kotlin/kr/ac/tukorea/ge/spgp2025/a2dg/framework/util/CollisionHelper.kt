@@ -20,10 +20,10 @@ object CollisionHelper {
     }
 
     fun collidesRadius(s1: Sprite, s2: Sprite): Boolean {
-        val dx = s1.getX() - s2.getX()
-        val dy = s1.getY() - s2.getY()
+        val dx = s1.x - s2.x
+        val dy = s1.y - s2.y
         val dist_sq = dx * dx + dy * dy
-        val sum_of_two_radii = s1.getRadius() + s2.getRadius()
+        val sum_of_two_radii = s1.radius + s2.radius
         val sum_sq = sum_of_two_radii * sum_of_two_radii
         return dist_sq < sum_sq
     }

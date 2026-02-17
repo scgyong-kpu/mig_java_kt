@@ -16,7 +16,6 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kotlin.math.abs
 import kotlin.math.atan2
-import kotlin.math.toDegrees
 
 class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     companion object {
@@ -36,6 +35,15 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     }
 
     var level = 0
+        set(value) {
+            field = value
+            bitmap = BitmapPool.get(BITMAP_IDS[value - 1])
+            range = (200 + (value * 200)).toFloat()
+            interval = 5.5f - value / 2.0f
+            barrelRect.set(dstRect)
+            val barrelSize = 50f + value * 10f
+            barrelRect.inset(-barrelSize, -barrelSize)
+        }
     var range = 0f
     var interval = 0f
     val barrelBitmap = BitmapPool.get(R.mipmap.tank_barrel)
@@ -45,24 +53,15 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
 
     init {
         setPosition(x, y, 200f, 200f)
-        setLevel(level)
+        this.level = level
     }
 
-    private fun setLevel(level: Int) {
-        bitmap = BitmapPool.get(BITMAP_IDS[level - 1])
-        this.level = level
-        range = 200 + (level * 200)
-        interval = 5.5f - level / 2.0f
-        barrelRect.set(dstRect)
-        val barrelSize = 50f + level * 10f
-        barrelRect.inset(-barrelSize, -barrelSize)
-    }
 
     override fun update() {
         super.update()
         val fly = findNearestFly()
         if (fly != null) {
-            angle = toDegrees(atan2(fly.getY() - y, fly.getX() - x).toDouble()).toFloat()
+            angle = Math.toDegrees(atan2(fly.y - y, fly.x - x).toDouble()).toFloat()
         }
         time += GameView.frameTime
         if (time > interval && fly != null) {
@@ -80,8 +79,8 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
         for (gameObject in flies) {
             if (gameObject !is Fly) continue
             val fly = gameObject
-            val fx = fly.getX()
-            val fy = fly.getY()
+            val fx = fly.x
+            val fy = fly.y
             val dx = x - fx
             val dx_sq = dx * dx
             if (dx_sq > nearest_dist_sq) continue
@@ -130,7 +129,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
             uninstall()
             return false
         }
-        setLevel(level + 1)
+        level = level + 1
         return true
     }
 

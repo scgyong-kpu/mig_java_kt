@@ -11,19 +11,19 @@ class MapSelector(val mainScene: MainScene) : Sprite(0) {
     private var selectedTile: Sprite? = null
 
     init {
-        val bg = mainScene.tiledBg
-        val tw = bg.tileWidth
-        val th = bg.tileHeight
-        for (x in 0 until 32) {
-            for (y in 0 until 18) {
-                if (bg.canInstallAt(x, y)) {
-                    val tile = Sprite(R.mipmap.tile_select)
-                    tile.setPosition(x * tw + tw / 2, y * th + th / 2, tw * 0.8f, th * 0.8f)
-                    tiles.add(tile)
-                    mainScene.add(MainScene.Layer.selection, tile)
-                }
-            }
-        }
+//        val bg = mainScene.tiledBg
+//        val tw = bg.tileWidth
+//        val th = bg.tileHeight
+//        for (x in 0 until 32) {
+//            for (y in 0 until 18) {
+//                if (bg.canInstallAt(x, y)) {
+//                    val tile = Sprite(R.mipmap.tile_select)
+//                    tile.setPosition(x * tw + tw / 2, y * th + th / 2, tw * 0.8f, th * 0.8f)
+//                    tiles.add(tile)
+//                    mainScene.add(MainScene.Layer.selection, tile)
+//                }
+//            }
+//        }
     }
 
     fun onTouch(action: Int, x: Float, y: Float): Boolean {
@@ -34,7 +34,7 @@ class MapSelector(val mainScene: MainScene) : Sprite(0) {
             }
             MotionEvent.ACTION_UP -> {
                 if (selectedTile != null) {
-                    val cannon = Cannon(1, selectedTile!!.getX(), selectedTile!!.getY())
+                    val cannon = Cannon(1, selectedTile!!.x, selectedTile!!.y)
                     mainScene.add(MainScene.Layer.cannon, cannon)
                     selectedTile = null
                     return true

@@ -17,12 +17,11 @@ class Score(mipmapId: Int, val right: Float, val top: Float, val width: Float) :
     private val dstRect = RectF()
 
     var score = 0
+        set(value) {
+            field = value
+            displayScore = value
+        }
     var displayScore = 0
-
-    fun setScore(score: Int) {
-        this.score = score
-        this.displayScore = score
-    }
 
     fun add(amount: Int) {
         score += amount
@@ -50,7 +49,5 @@ class Score(mipmapId: Int, val right: Float, val top: Float, val width: Float) :
             value /= 10
         }
     }
-
-    fun getScore(): Int = score
 }
 

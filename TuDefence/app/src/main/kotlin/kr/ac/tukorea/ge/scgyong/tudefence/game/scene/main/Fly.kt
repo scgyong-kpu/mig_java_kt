@@ -77,8 +77,6 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
     var life = 0f
     var maxLife = 0f
     var displayLife = 0f
-    private var dx = 0f
-    private var dy = 0f
     private val pos = FloatArray(2)
     private val tan = FloatArray(2)
 
