@@ -133,7 +133,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
         return true
     }
 
-    private fun uninstall() {
+    fun uninstall() {
         Scene.top()?.remove(MainScene.Layer.cannon, this)
     }
 
