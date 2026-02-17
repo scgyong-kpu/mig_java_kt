@@ -11,7 +11,8 @@ import kotlin.math.min
 import kotlin.math.sin
 import kotlin.math.sqrt
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.rectF
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.setRect
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 
@@ -28,8 +29,8 @@ class JoyStick(
     private val thumbBitmap = BitmapPool.get(thumbBmpId)
     private var x = xPos
     private var y = yPos
-    private val bgRect = RectUtil.newRectF(x, y, bg_radius)
-    private val thumbRect = RectUtil.newRectF(x, y, thumb_radius)
+    private val bgRect = rectF(x, y, bg_radius)
+    private val thumbRect = rectF(x, y, thumb_radius)
 
     var visible = false
     private var startX = 0f
@@ -53,7 +54,7 @@ class JoyStick(
                 val pts = Metrics.fromScreen(event.x, event.y)
                 startX = pts[0]
                 startY = pts[1]
-                RectUtil.setRect(thumbRect, x, y, thumb_radius)
+                thumbRect.setRect(x, y, thumb_radius)
                 power = 0f
                 true
             }
@@ -74,7 +75,7 @@ class JoyStick(
                 val cx = x + dx
                 val cy = y + dy
                 Log.d(TAG, "angle=${Math.toDegrees(angle_radian).toInt()}° power=${String.format("%.2f", power)}")
-                RectUtil.setRect(thumbRect, cx, cy, thumb_radius)
+                thumbRect.setRect(cx, cy, thumb_radius)
                 false
             }
             MotionEvent.ACTION_UP -> {

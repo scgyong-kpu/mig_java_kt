@@ -8,7 +8,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.CollisionHelper
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.collidesRadius
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 import kotlin.math.cos
 import kotlin.math.pow
@@ -66,7 +66,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         val flies = scene.objectsAt(MainScene.Layer.enemy)
         for (index in flies.size - 1 downTo 0) {
             val fly = flies[index] as? Fly ?: continue
-            val collides = CollisionHelper.collidesRadius(this, fly)
+            val collides = collidesRadius(fly)
             if (collides) {
                 scene.remove(MainScene.Layer.shell, this)
                 hit(fly, power, scene)

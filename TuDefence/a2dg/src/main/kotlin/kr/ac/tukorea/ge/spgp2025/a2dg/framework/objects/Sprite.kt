@@ -10,7 +10,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics.Position
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.graphics.Velocity
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.setRect
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 
 open class Sprite(mipmapId: Int) : IGameObject {
@@ -65,12 +65,12 @@ open class Sprite(mipmapId: Int) : IGameObject {
         width = 2 * radius
         height = width
         this.radius = radius
-        RectUtil.setRect(dstRect, x, y, radius)
+        dstRect.setRect(x, y, radius)
     }
 
     fun setPosition(x: Float, y: Float) {
         position.set(x, y)
-        RectUtil.setRect(dstRect, x, y, width, height)
+        dstRect.setRect(x, y, width, height)
     }
 
     fun setPosition(x: Float, y: Float, width: Float, height: Float) {
@@ -78,7 +78,7 @@ open class Sprite(mipmapId: Int) : IGameObject {
         this.width = width
         this.height = height
         radius = kotlin.math.min(width, height) / 2
-        RectUtil.setRect(dstRect, x, y, width, height)
+        dstRect.setRect(x, y, width, height)
     }
 
 
