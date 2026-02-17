@@ -52,49 +52,29 @@ object Converter {
     }
 
     // Serialize/deserialize helpers
-    @Throws(IOException::class)
     fun fromJsonString(json: String): TiledMap {
-        return getObjectReader().readValue(json)
+        return reader.readValue(json)
     }
 
-    @Throws(IOException::class)
     fun toJsonString(obj: TiledMap): String {
-        return getObjectWriter().writeValueAsString(obj)
+        return writer.writeValueAsString(obj)
     }
 
-    private var reader: ObjectReader? = null
-    private var writer: ObjectWriter? = null
+    private val reader: ObjectReader by lazy { mapper.readerFor(TiledMap::class.java) }
+    private val writer: ObjectWriter by lazy { mapper.writerFor(TiledMap::class.java) }
 
-    private fun instantiateMapper() {
-        val mapper = ObjectMapper()
-        mapper.findAndRegisterModules()
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        val module = SimpleModule()
-        module.addDeserializer(OffsetDateTime::class.java,
-            object : JsonDeserializer<OffsetDateTime>() {
-                @Throws(IOException::class)
-                override fun deserialize(
-                    jsonParser: JsonParser,
-                    deserializationContext: DeserializationContext
-                ): OffsetDateTime {
-                    val value = jsonParser.text
-                    return parseDateTimeString(value)
-                }
-            })
-        mapper.registerModule(module)
-        reader = mapper.readerFor(TiledMap::class.java)
-        writer = mapper.writerFor(TiledMap::class.java)
-    }
-
-    private fun getObjectReader(): ObjectReader {
-        if (reader == null) instantiateMapper()
-        return reader!!
-    }
-
-    private fun getObjectWriter(): ObjectWriter {
-        if (writer == null) instantiateMapper()
-        return writer!!
+    private val mapper: ObjectMapper by lazy {
+        ObjectMapper().apply {
+            findAndRegisterModules()
+            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            val module = SimpleModule()
+            module.addDeserializer(OffsetDateTime::class.java) { jsonParser, _ ->
+                val value = jsonParser.text
+                parseDateTimeString(value)
+            }
+            registerModule(module)
+        }
     }
 }
 
