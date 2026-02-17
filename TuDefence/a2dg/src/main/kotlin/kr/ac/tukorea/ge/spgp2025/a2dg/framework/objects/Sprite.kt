@@ -61,7 +61,7 @@ open class Sprite(mipmapId: Int) : IGameObject {
     }
 
     fun setPosition(x: Float, y: Float, radius: Float) {
-        position = Position(x, y)
+        position.set(x, y)
         width = 2 * radius
         height = width
         this.radius = radius
@@ -69,12 +69,12 @@ open class Sprite(mipmapId: Int) : IGameObject {
     }
 
     fun setPosition(x: Float, y: Float) {
-        position = Position(x, y)
+        position.set(x, y)
         RectUtil.setRect(dstRect, x, y, width, height)
     }
 
     fun setPosition(x: Float, y: Float, width: Float, height: Float) {
-        position = Position(x, y)
+        position.set(x, y)
         this.width = width
         this.height = height
         radius = kotlin.math.min(width, height) / 2
