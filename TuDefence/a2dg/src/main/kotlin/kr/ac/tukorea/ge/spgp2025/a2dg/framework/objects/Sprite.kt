@@ -8,20 +8,42 @@ import android.util.Log
 import androidx.annotation.NonNull
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Position
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.RectUtil
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Velocity
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 
 open class Sprite(mipmapId: Int) : IGameObject {
     protected var bitmap: Bitmap? = null
     protected var srcRect: Rect? = null
     val dstRect = RectF()
-    var x = 0f
-    var y = 0f
-    var dx = 0f
-    var dy = 0f
+    var position = Position()
+    var velocity = Velocity()
     var width = 0f
     var height = 0f
     var radius = 0f
+    
+    // 직접 접근 가능 (copy 없음)
+    var x: Float
+        get() = position.x
+        set(value) {
+            position.x = value
+        }
+    var y: Float
+        get() = position.y
+        set(value) {
+            position.y = value
+        }
+    var dx: Float
+        get() = velocity.dx
+        set(value) {
+            velocity.dx = value
+        }
+    var dy: Float
+        get() = velocity.dy
+        set(value) {
+            velocity.dy = value
+        }
 
     init {
         if (mipmapId != 0) {
@@ -39,23 +61,20 @@ open class Sprite(mipmapId: Int) : IGameObject {
     }
 
     fun setPosition(x: Float, y: Float, radius: Float) {
-        this.x = x
-        this.y = y
-        this.width = 2 * radius
-        this.height = this.width
+        position = Position(x, y)
+        width = 2 * radius
+        height = width
         this.radius = radius
         RectUtil.setRect(dstRect, x, y, radius)
     }
 
     fun setPosition(x: Float, y: Float) {
-        this.x = x
-        this.y = y
+        position = Position(x, y)
         RectUtil.setRect(dstRect, x, y, width, height)
     }
 
     fun setPosition(x: Float, y: Float, width: Float, height: Float) {
-        this.x = x
-        this.y = y
+        position = Position(x, y)
         this.width = width
         this.height = height
         radius = kotlin.math.min(width, height) / 2
@@ -68,10 +87,9 @@ open class Sprite(mipmapId: Int) : IGameObject {
     }
 
     override fun update() {
-        val timedDx = dx * GameView.frameTime
-        val timedDy = dy * GameView.frameTime
-        x += timedDx
-        y += timedDy
+        val timedDx = velocity.dx * GameView.frameTime
+        val timedDy = velocity.dy * GameView.frameTime
+        position.add(timedDx, timedDy)
         dstRect.offset(timedDx, timedDy)
     }
 

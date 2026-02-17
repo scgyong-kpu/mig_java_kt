@@ -42,8 +42,10 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         val angleInDegrees = cannon.angle.toDouble()
         val radian = Math.toRadians(angleInDegrees)
         val speed = (level + 10) * 100
-        dx = (speed * cos(radian)).toFloat()
-        dy = (speed * sin(radian)).toFloat()
+        velocity.set(
+            dx = (speed * cos(radian)).toFloat(),
+            dy = (speed * sin(radian)).toFloat()
+        )
         power = (10 * 1.2.pow((level - 1).toDouble())).toFloat()
         splashes = level >= 4
         radius = 20f + level * 2f

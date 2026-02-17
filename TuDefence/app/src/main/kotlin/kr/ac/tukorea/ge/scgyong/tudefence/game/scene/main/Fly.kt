@@ -102,8 +102,7 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
         srcRects = rects_array!![type.ordinal]
         setPosition(0f, 0f, size, size)
         distance = 0f
-        dx = 0f
-        dy = 0f
+        velocity.set(0f, 0f)
         this.speed = speed
         life = type.maxHealth * (0.9f + rand.nextFloat() * 0.2f)
         maxLife = life
@@ -135,12 +134,13 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
             return
         }
         val maxDiff = width / 5
-        dx += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
-        if (dx < -maxDiff) dx = -maxDiff
-        else if (dx > maxDiff) dx = maxDiff
-        dy += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
-        if (dy < -maxDiff) dy = -maxDiff
-        else if (dy > maxDiff) dy = maxDiff
+        var newDx = dx + (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
+        if (newDx < -maxDiff) newDx = -maxDiff
+        else if (newDx > maxDiff) newDx = maxDiff
+        var newDy = dy + (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
+        if (newDy < -maxDiff) newDy = -maxDiff
+        else if (newDy > maxDiff) newDy = maxDiff
+        velocity.set(newDx, newDy)
 
         pm.getPosTan(distance, pos, tan)
         setPosition(pos[0] + dx, pos[1] + dy)
