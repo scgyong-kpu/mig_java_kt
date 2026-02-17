@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Path
 import android.graphics.PathMeasure
 import android.graphics.Rect
+import android.util.Log
 import androidx.core.graphics.PathParser
 import kr.ac.tukorea.ge.scgyong.tudefence.R
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable
@@ -79,6 +80,7 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
     var displayLife = 0f
     private val pos = FloatArray(2)
     private val tan = FloatArray(2)
+    private var gauge: Gauge? = null
 
     init {
         if (rects_array == null) {
@@ -130,7 +132,31 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
         distance += speed * GameView.frameTime
         if (distance > pathLength) {
             Scene.top()?.remove(MainScene.Layer.enemy, this)
+            return
         }
+        val maxDiff = width / 5
+        dx += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
+        if (dx < -maxDiff) dx = -maxDiff
+        else if (dx > maxDiff) dx = maxDiff
+        dy += (2 * maxDiff * rand.nextFloat() - maxDiff) * GameView.frameTime
+        if (dy < -maxDiff) dy = -maxDiff
+        else if (dy > maxDiff) dy = maxDiff
+
+        pm.getPosTan(distance, pos, tan)
+        setPosition(pos[0] + dx, pos[1] + dy)
+        angle = Math.toDegrees(Math.atan2(tan[1].toDouble(), tan[0].toDouble())).toFloat()
+    }
+
+    override fun draw(canvas: Canvas) {
+        canvas.save()
+        canvas.rotate(angle, x, y)
+        super.draw(canvas)
+        canvas.restore()
+        val barSize = width * 2 / 3
+        if (gauge == null) {
+            gauge = Gauge(0.2f, R.color.fly_health_fg, R.color.fly_health_bg)
+        }
+        gauge!!.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, displayLife / maxLife)
     }
 
     override fun onRecycle() {
