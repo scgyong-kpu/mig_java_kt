@@ -11,6 +11,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.drawGauge
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import java.util.Random
 import kotlin.math.sqrt
@@ -158,7 +159,7 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
         if (gauge == null) {
             gauge = Gauge(0.2f, R.color.fly_health_fg, R.color.fly_health_bg)
         }
-        gauge!!.draw(canvas, x - barSize / 2, y + barSize / 2, barSize, displayLife / maxLife)
+        canvas.drawGauge(gauge!!, x - barSize / 2, y + barSize / 2, barSize, displayLife / maxLife)
     }
 
     override fun onRecycle() {
