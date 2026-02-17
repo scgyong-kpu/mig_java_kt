@@ -1,15 +1,10 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main
 
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.RectF
-import android.util.Log
-import androidx.annotation.NonNull
-import java.util.ArrayList
 import kr.ac.tukorea.ge.scgyong.tudefence.R
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
@@ -61,7 +56,9 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
         super.update()
         val fly = findNearestFly()
         if (fly != null) {
-            angle = Math.toDegrees(atan2(fly.y - y, fly.x - x).toDouble()).toFloat()
+            val dy = (fly.y - y).toDouble()
+            val dx = (fly.x - x).toDouble()
+            angle = Math.toDegrees(atan2(dy, dx)).toFloat()
         }
         time += GameView.frameTime
         if (time > interval && fly != null) {
@@ -140,7 +137,6 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     fun getUpgradeCost() = getUpgradeCost(level)
     fun getSellPrice() = getSellPrice(level)
 
-    @NonNull
     override fun toString(): String {
         return "Cannon<$level>(${(x / 100).toInt()},${(y / 100).toInt()})@${System.identityHashCode(this)}"
     }

@@ -39,7 +39,8 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         if (level > maxLevel) level = maxLevel
         srcRect!!.set(h * (level - 1), 0, h * level, h)
 
-        val radian = Math.toRadians(cannon.angle.toDouble())
+        val angleInDegrees = cannon.angle.toDouble()
+        val radian = Math.toRadians(angleInDegrees)
         val speed = (level + 10) * 100
         dx = (speed * cos(radian)).toFloat()
         dy = (speed * sin(radian)).toFloat()

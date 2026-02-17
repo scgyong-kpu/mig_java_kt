@@ -35,7 +35,7 @@ class JoyStick(
     private var startX = 0f
     private var startY = 0f
     var power = 0f
-    var angle_radian = 0f
+    var angle_radian = 0.0
 
     override fun update() {
     }
@@ -64,16 +64,16 @@ class JoyStick(
                 var dy = min(pts[1] - startY, bg_radius)
                 dy = kotlin.math.max(-bg_radius, dy)
                 val radius = sqrt(dx * dx + dy * dy)
-                angle_radian = atan2(dy, dx).toFloat()
+                angle_radian = atan2(dy.toDouble(), dx.toDouble())
 
                 if (radius > move_radius) {
-                    dx = (move_radius * cos(angle_radian.toDouble())).toFloat()
-                    dy = (move_radius * sin(angle_radian.toDouble())).toFloat()
+                    dx = (move_radius * cos(angle_radian)).toFloat()
+                    dy = (move_radius * sin(angle_radian)).toFloat()
                 }
                 power = (radius / move_radius).toFloat()
                 val cx = x + dx
                 val cy = y + dy
-                Log.d(TAG, "angle=${Math.toDegrees(angle_radian.toDouble()).toInt()}° power=${String.format("%.2f", power)}")
+                Log.d(TAG, "angle=${Math.toDegrees(angle_radian).toInt()}° power=${String.format("%.2f", power)}")
                 RectUtil.setRect(thumbRect, cx, cy, thumb_radius)
                 false
             }
