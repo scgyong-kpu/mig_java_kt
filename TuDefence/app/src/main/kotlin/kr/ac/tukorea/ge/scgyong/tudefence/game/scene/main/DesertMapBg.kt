@@ -1,8 +1,11 @@
 package kr.ac.tukorea.ge.scgyong.tudefence.game.scene.main
 
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.LayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.TiledBackground
 
-class DesertMapBg : TiledBackground("map/desert.tmj", 100f, 100f) {
+class DesertMapBg : TiledBackground("map/desert.tmj", 100f, 100f),
+    ILayerProvider<MainScene.Layer> by LayerProvider(MainScene.Layer.bg) {
     companion object {
         const val TILE_INDEX_BRICK = 10
         private const val TAG = "DesertMapBg"

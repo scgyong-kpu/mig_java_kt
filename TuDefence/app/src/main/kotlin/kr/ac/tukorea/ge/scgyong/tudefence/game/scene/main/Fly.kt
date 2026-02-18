@@ -7,7 +7,9 @@ import android.graphics.Rect
 import android.util.Log
 import androidx.core.graphics.PathParser
 import kr.ac.tukorea.ge.scgyong.tudefence.R
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.LayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.SheetSprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.Gauge
@@ -16,7 +18,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import java.util.Random
 import kotlin.math.sqrt
 
-class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
+class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable,
+    ILayerProvider<MainScene.Layer> by LayerProvider(MainScene.Layer.enemy) {
     companion object {
         private const val TAG = "Fly"
         private val rand = Random()
@@ -131,7 +134,7 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
         }
         distance += speed * GameView.frameTime
         if (distance > pathLength) {
-            Scene.top()?.remove(MainScene.Layer.enemy, this)
+            Scene.top()?.remove(this)
             return
         }
         val maxDiff = width / 5

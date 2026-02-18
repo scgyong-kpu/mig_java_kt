@@ -31,7 +31,7 @@ open class Scene {
         layers[layerIndex].add(gameObject)
     }
 
-    fun add(gameObject: ILayerProvider<*>) {
+    fun <T> add(gameObject: T) where T : IGameObject, T : ILayerProvider<*> {
         val e = gameObject.getLayer()
         val layerIndex = e.ordinal
         layers[layerIndex].add(gameObject)
@@ -42,7 +42,7 @@ open class Scene {
         remove(layerIndex, gobj)
     }
 
-    fun remove(gameObject: ILayerProvider<*>) {
+    fun <T> remove(gameObject: T) where T : IGameObject, T : ILayerProvider<*> {
         val e = gameObject.getLayer()
         val layerIndex = e.ordinal
         remove(layerIndex, gameObject)

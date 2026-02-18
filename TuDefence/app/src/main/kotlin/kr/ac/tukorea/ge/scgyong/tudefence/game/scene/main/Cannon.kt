@@ -5,6 +5,8 @@ import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.RectF
 import kr.ac.tukorea.ge.scgyong.tudefence.R
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.LayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
@@ -12,7 +14,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kotlin.math.abs
 import kotlin.math.atan2
 
-class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
+class Cannon(level: Int, x: Float, y: Float) : Sprite(0),
+    ILayerProvider<MainScene.Layer> by LayerProvider(MainScene.Layer.cannon) {
     companion object {
         private val BITMAP_IDS = intArrayOf(
             R.mipmap.f_01_01, R.mipmap.f_02_01, R.mipmap.f_03_01, R.mipmap.f_04_01, R.mipmap.f_05_01,
@@ -63,7 +66,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
         time += GameView.frameTime
         if (time > interval && fly != null) {
             val shell = Shell.get(this, fly)
-            Scene.top()?.add(MainScene.Layer.shell, shell)
+            Scene.top()?.add(shell)
             time = 0f
         }
     }
@@ -131,7 +134,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     }
 
     fun uninstall() {
-        Scene.top()?.remove(MainScene.Layer.cannon, this)
+        Scene.top()?.remove(this)
     }
 
     fun getUpgradeCost() = getUpgradeCost(level)

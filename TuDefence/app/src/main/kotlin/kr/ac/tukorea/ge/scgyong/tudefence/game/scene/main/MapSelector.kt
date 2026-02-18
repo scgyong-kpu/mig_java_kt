@@ -10,13 +10,15 @@ import android.util.Log
 import android.view.MotionEvent
 import kr.ac.tukorea.ge.scgyong.tudefence.BuildConfig
 import kr.ac.tukorea.ge.scgyong.tudefence.R
-import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.LayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 
-class MapSelector(val scene: MainScene) : Sprite(R.mipmap.selection) {
+class MapSelector(val scene: MainScene) : Sprite(R.mipmap.selection),
+    ILayerProvider<MainScene.Layer> by LayerProvider(MainScene.Layer.selection) {
     companion object {
         private val TAG = MapSelector::class.simpleName
         private const val TILE_SIZE = 100f
@@ -169,7 +171,7 @@ class MapSelector(val scene: MainScene) : Sprite(R.mipmap.selection) {
         if (cost > score) return false
         scene.score.score = score - cost
         val newCannon = Cannon(level, x, y)
-        scene.add(MainScene.Layer.cannon, newCannon)
+        scene.add(newCannon)
         return true
     }
 

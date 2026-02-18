@@ -25,9 +25,9 @@ class MainScene : Scene() {
     init {
         initLayers(Layer.values().size)
         tiledBg = DesertMapBg()
-        add(Layer.bg, tiledBg)
-        add(Layer.selection, MapSelector(this).also { mapSelector = it })
-        add(Layer.controller, WaveGen(this))
+        add(tiledBg)
+        add(MapSelector(this).also { mapSelector = it })
+        add(WaveGen(this))
 
         score = Score(R.mipmap.gold_number, Metrics.width - 50, 50f, 100f)
         score.score = 30

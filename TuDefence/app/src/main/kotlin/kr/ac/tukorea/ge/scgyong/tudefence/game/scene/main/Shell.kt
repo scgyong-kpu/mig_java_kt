@@ -5,7 +5,9 @@ import android.util.Log
 import java.util.ArrayList
 import kr.ac.tukorea.ge.scgyong.tudefence.R
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.ILayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IRecyclable
+import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.LayerProvider
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.objects.Sprite
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.scene.Scene
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.collidesRadius
@@ -14,7 +16,8 @@ import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
 
-class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
+class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable,
+    ILayerProvider<MainScene.Layer> by LayerProvider(MainScene.Layer.shell) {
     companion object {
         private const val TAG = "Shell"
 
@@ -59,7 +62,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         val scene = MainScene.get() ?: return
         if (x < -radius || x > Metrics.width + radius ||
             y < -radius || y > Metrics.height + radius) {
-            scene.remove(MainScene.Layer.shell, this)
+            scene.remove(this)
             return
         }
 
@@ -68,7 +71,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
             val fly = flies[index] as? Fly ?: continue
             val collides = collidesRadius(fly)
             if (collides) {
-                scene.remove(MainScene.Layer.shell, this)
+                scene.remove(this)
                 hit(fly, power, scene)
                 if (splashes) {
                     explode(scene, fly, flies)
@@ -82,7 +85,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         Log.d(TAG, "Hit: $damage to: $fly")
         val dead = fly.decreaseLife(damage)
         if (dead) {
-            scene.remove(MainScene.Layer.enemy, fly)
+            scene.remove(fly)
             scene.score.add(fly.score())
         }
     }
@@ -92,7 +95,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         val fy = flyHit.y
         val explosion_radius = 60 + 3 * power
         val ex = Explosion.get(fx, fy, explosion_radius)
-        scene.add(MainScene.Layer.explosion, ex)
+        scene.add(ex)
         val radius_sq = explosion_radius * explosion_radius
         Log.v(TAG, "[Explosion")
         for (index in flies.size - 1 downTo 0) {
