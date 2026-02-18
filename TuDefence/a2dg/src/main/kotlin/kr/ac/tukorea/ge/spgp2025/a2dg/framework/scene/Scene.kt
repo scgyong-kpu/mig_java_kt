@@ -28,12 +28,14 @@ open class Scene {
 
     fun <E : Enum<E>> add(layer: E, gameObject: IGameObject) {
         val layerIndex = layer.ordinal
+        gameObject.layerIndex = layerIndex
         layers[layerIndex].add(gameObject)
     }
 
     fun add(gameObject: ILayerProvider<*>) {
         val e = gameObject.getLayer()
         val layerIndex = e.ordinal
+        gameObject.layerIndex = layerIndex
         layers[layerIndex].add(gameObject)
     }
 
@@ -46,6 +48,13 @@ open class Scene {
         val e = gameObject.getLayer()
         val layerIndex = e.ordinal
         remove(layerIndex, gameObject)
+    }
+
+    fun remove(gameObject: IGameObject) {
+        val layerIndex = gameObject.layerIndex
+        if (layerIndex >= 0 && layerIndex < layers.size) {
+            remove(layerIndex, gameObject)
+        }
     }
 
     private fun remove(layerIndex: Int, gobj: IGameObject) {

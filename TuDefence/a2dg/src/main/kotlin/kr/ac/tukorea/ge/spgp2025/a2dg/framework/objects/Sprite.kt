@@ -14,6 +14,7 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.util.setRect
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 
 open class Sprite(mipmapId: Int) : IGameObject {
+    override var layerIndex: Int = -1
     protected var bitmap: Bitmap? = null
     protected var srcRect: Rect? = null
     val dstRect = RectF()

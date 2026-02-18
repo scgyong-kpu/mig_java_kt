@@ -8,6 +8,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 
 class WaveGen(val mainScene: MainScene) : IGameObject {
+    override var layerIndex: Int = -1
+    
     companion object {
         private const val TAG = "WaveGen"
     }

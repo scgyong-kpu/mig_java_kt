@@ -131,7 +131,7 @@ class Fly : SheetSprite(R.mipmap.galaga_flies, 2.0f), IRecyclable {
         }
         distance += speed * GameView.frameTime
         if (distance > pathLength) {
-            Scene.top()?.remove(MainScene.Layer.enemy, this)
+            Scene.top()?.remove(this)
             return
         }
         val maxDiff = width / 5
