@@ -131,7 +131,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     }
 
     fun uninstall() {
-        Scene.top()?.remove(this)
+        Scene.top()?.remove(MainScene.Layer.cannon, this)
     }
 
     fun getUpgradeCost() = getUpgradeCost(level)

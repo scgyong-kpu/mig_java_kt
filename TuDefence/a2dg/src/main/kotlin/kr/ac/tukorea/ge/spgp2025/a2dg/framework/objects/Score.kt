@@ -8,7 +8,6 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.interfaces.IGameObject
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.res.BitmapPool
 
 class Score(mipmapId: Int, val right: Float, val top: Float, val width: Float) : IGameObject {
-    override var layerIndex: Int = -1
     private val bitmap = BitmapPool.get(mipmapId)
     private val dstCharWidth = width
     private val srcCharWidth = bitmap.width / 10

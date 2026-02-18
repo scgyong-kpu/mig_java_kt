@@ -19,7 +19,6 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.GameView
 import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 
 open class TiledBackground(mapAssetFile: String, var tileWidth: Float, var tileHeight: Float) : IGameObject {
-    override var layerIndex: Int = -1
     val map: TiledMap
     val assetPath: String
     var tileset: Tileset? = null

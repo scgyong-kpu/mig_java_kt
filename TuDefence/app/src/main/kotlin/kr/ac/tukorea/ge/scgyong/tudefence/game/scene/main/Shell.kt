@@ -59,7 +59,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         val scene = MainScene.get() ?: return
         if (x < -radius || x > Metrics.width + radius ||
             y < -radius || y > Metrics.height + radius) {
-            scene.remove(this)
+            scene.remove(MainScene.Layer.shell, this)
             return
         }
 
@@ -68,7 +68,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
             val fly = flies[index] as? Fly ?: continue
             val collides = collidesRadius(fly)
             if (collides) {
-                scene.remove(this)
+                scene.remove(MainScene.Layer.shell, this)
                 hit(fly, power, scene)
                 if (splashes) {
                     explode(scene, fly, flies)
@@ -82,7 +82,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
         Log.d(TAG, "Hit: $damage to: $fly")
         val dead = fly.decreaseLife(damage)
         if (dead) {
-            scene.remove(fly)
+            scene.remove(MainScene.Layer.enemy, fly)
             scene.score.add(fly.score())
         }
     }
