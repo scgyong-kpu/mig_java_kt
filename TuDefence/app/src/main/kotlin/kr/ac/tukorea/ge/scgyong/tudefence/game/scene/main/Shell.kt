@@ -56,7 +56,7 @@ class Shell : Sprite(R.mipmap.shells, 0f, 0f, 50f, 50f), IRecyclable {
 
     override fun update() {
         super.update()
-        val scene = Scene.top() as? MainScene ?: return
+        val scene = MainScene.get() ?: return
         if (x < -radius || x > Metrics.width + radius ||
             y < -radius || y > Metrics.height + radius) {
             scene.remove(MainScene.Layer.shell, this)

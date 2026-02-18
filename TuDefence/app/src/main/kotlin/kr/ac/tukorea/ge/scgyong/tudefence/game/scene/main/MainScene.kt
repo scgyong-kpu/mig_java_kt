@@ -10,6 +10,8 @@ import kr.ac.tukorea.ge.spgp2025.a2dg.framework.view.Metrics
 class MainScene : Scene() {
     companion object {
         private const val TAG = "MainScene"
+
+        fun get(): MainScene? = Scene.top() as? MainScene
     }
 
     val tiledBg: DesertMapBg

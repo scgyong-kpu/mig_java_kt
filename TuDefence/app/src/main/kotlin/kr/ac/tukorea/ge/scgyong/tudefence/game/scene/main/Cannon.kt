@@ -71,7 +71,7 @@ class Cannon(level: Int, x: Float, y: Float) : Sprite(0) {
     private fun findNearestFly(): Fly? {
         var nearest_dist_sq = range * range
         var nearest: Fly? = null
-        val scene = Scene.top() as? MainScene ?: return null
+        val scene = MainScene.get() ?: return null
         val flies = scene.objectsAt(MainScene.Layer.enemy)
         for (gameObject in flies) {
             if (gameObject !is Fly) continue
